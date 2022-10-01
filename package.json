@@ -1,0 +1,23 @@
+{
+  "name": "challenge-11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurenp305/note-taker-challenge-11.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurenp305/note-taker-challenge-11/issues"
+  },
+  "homepage": "https://github.com/laurenp305/note-taker-challenge-11#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
