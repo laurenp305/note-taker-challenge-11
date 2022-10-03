@@ -16,25 +16,28 @@ var getNotes = function() {
 };
 
 //saves notes to db
-var saveNote = function(note) {
-  return $.ajax({
-    url: "/api/notes",
-    data: note,
-    method: "POST"
+const saveNote = (note) =>
+  fetch('/api/notes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
   });
-};
+
 
 //additional function to delete note from db (BONUS)
-var deleteNote = function(id) {
-  return $.ajax({
-    url: "api/notes/" + id,
-    method: "DELETE"
+const deleteNote = (id) =>
+  fetch(`/api/notes/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
-};
 
 //shows current note or displays empty input 
 const renderCurrentNote = () => {
-  $saveNote.hide();
+  hide(saveNote);
 
   if (currentNote.id) {
     $noteTitle.attr("readonly", true);
@@ -62,13 +65,55 @@ saveNote (newNote).then(function(data) {
   });
 };
 
+//delete clicked note 
+var manageNoteDelete = function(event) {
+    // Prevents the click listener for the list from being called when the button inside of it is clicked
+  event.stopPropagation();
+
+  var note = e.target;
+  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+
+  if (currentNote.id === noteId) {
+    currentNote = {};
+  }
+
+  deleteNote (noteId).then(function() {
+    getAndRenderNotes();
+    renderCurrentNote();
+  });
+};
+
+// Sets the currentNote and displays it
+const handleNoteView = (e) => {
+  e.preventDefault();
+  currentNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  renderCurrentNote();
+};
+
+// Sets the currentNote to and empty object and allows the user to enter a new note
+const handleNewNoteView = (e) => {
+  currentNote = {};
+  renderCurrentNote();
+};
+
+const handleRenderSave = () => {
+  if (!noteTitle.value.trim() || !noteText.value.trim()) {
+    hide(saveNoteBtn);
+  } else {
+    show(saveNoteBtn);
+  }
+};
 
 
-if (window.location.pathname === '/notes') {
+
+//course code
+
+
+  if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
-  saveNoteBtn = document.querySelector('.save-note');
-  newNoteBtn = document.querySelector('.new-note');
+  saveNote = document.querySelector('.save-note');
+  newNote = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
