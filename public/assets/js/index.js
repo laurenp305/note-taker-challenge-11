@@ -24,6 +24,44 @@ var saveNote = function(note) {
   });
 };
 
+//additional function to delete note from db (BONUS)
+var deleteNote = function(id) {
+  return $.ajax({
+    url: "api/notes/" + id,
+    method: "DELETE"
+  });
+};
+
+//shows current note or displays empty input 
+const renderCurrentNote = () => {
+  $saveNote.hide();
+
+  if (currentNote.id) {
+    $noteTitle.attr("readonly", true);
+    $noteText.attr("readonly", true);
+    $noteTitle.val(currentNote.title);
+    $noteText.val(currentNote.text);
+  } else {
+    $noteTitle.attr("readonly", false);
+    $noteText.attr("readonly", false);
+    $noteTitle.val("");
+    $noteText.val("");
+  }
+};
+
+//display notes
+var manageNoteSave = function() {
+  var newNote = {
+    title: $noteTitle.val(),
+    text: $noteText.val()
+  };
+
+saveNote (newNote).then(function(data) {
+    getAndRenderNotes(); 
+    renderCurrentNote();
+  });
+};
+
 
 
 if (window.location.pathname === '/notes') {
