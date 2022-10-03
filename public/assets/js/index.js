@@ -1,8 +1,30 @@
-let noteTitle;
-let noteText;
-let saveNoteBtn;
-let newNoteBtn;
-let noteList;
+var $noteTitle = $(".note-title");
+var $noteText = $(".note-textarea");
+var $saveNote = $(".save-note");
+var $newNote = $(".new-note");
+var $noteList = $(".list-container .list-group");
+
+// currentNote is used to keep track of the note in the textarea
+let currentNote = {};
+
+//this function grabs all the notes from db
+var getNotes = function() {
+  return $.ajax({
+    url: "/api/notes",
+    method: "GET"
+  });
+};
+
+//saves notes to db
+var saveNote = function(note) {
+  return $.ajax({
+    url: "/api/notes",
+    data: note,
+    method: "POST"
+  });
+};
+
+
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
