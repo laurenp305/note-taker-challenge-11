@@ -12,16 +12,26 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
+const show = (elem) => {
+  elem.style.display = 'inline';
+};
+
+const hide = (elem) => {
+  elem.style.display = 'none';
+};  
+
 // currentNote is used to keep track of the note in the textarea
 let currentNote = {};
 
 //this function grabs all the notes from db
 var getNotes = function() {
-  return $.ajax({
-    url: "/api/notes",
-    method: "GET"
-  });
-};
+  fetch("/api/notes", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+      }
+      });
+    };
 
 //saves notes to db
 const saveNote = (note) =>
@@ -100,6 +110,13 @@ const handleNoteView = (e) => {
 
 // Sets the currentNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
+  e.preventDefault();
+  currentNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  renderCurrentNote();
+};
+
+// If a note's title or text are empty, hide the save button
+const handleNewNoteView = () => {
   currentNote = {};
   renderCurrentNote();
 };
