@@ -5,6 +5,10 @@ This application allows the user to create, save, and delete notes. Notes appear
 
 ## Screenshots
 
+<img width="975" alt="Screen Shot 2022-10-04 at 7 28 49 PM" src="https://user-images.githubusercontent.com/106932259/193953300-5a4e37e2-db1d-4ddf-aff7-6e664f798bde.png">
+
+<img width="985" alt="image" src="https://user-images.githubusercontent.com/106932259/193953388-fdb2e5a3-d32a-4550-8d9b-f9948ab1a613.png">
+
 ## Technology Used
 
 - Express package
